@@ -1,9 +1,3 @@
-https://css-tricks.com/getting-started-with-the-file-system-access-api/
-The File System Access API is a web API that allows read and write access to a user’s local files. It unlocks new capabilities to build powerful web applications, such as text editors or IDEs, image editing tools, improved import/export, all in the frontend.
-
-Reading files with the File System Access API
-Before diving into the code required to read a file from the user’s system, an important detail to keep in mind is that calling the File System Access API needs to be done by a user gesture, in a secure context.
-
 ------------------------------
 https://developer.mozilla.org/en-US/docs/Web/API/FileSystem
 The File and Directory Entries API interface FileSystem is used to represent a file system. These objects can be obtained from the filesystem property on any file system entry. Some browsers offer additional APIs to create and manage file systems, such as Chrome's requestFileSystem() method.
@@ -32,7 +26,9 @@ FileList — «массив» объектов File.
 Blob — сущность, позволяющая разбирать файл по байтам.
 
 ------------------------------------------------------
-https://web.dev/file-system-access/
-The File System Access API is currently supported on most Chromium browsers on Windows, macOS, ChromeOS, and Linux. 
-------------------------------------------------------
 https://en.wikipedia.org/wiki/File_system_API
+
+--------------------------------------------------------
+https://wicg.github.io/entries-api/#filesystem
+----------------------------------------------------
+http://html5ru.com/filesystem-api.html
