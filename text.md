@@ -32,3 +32,5 @@ https://en.wikipedia.org/wiki/File_system_API
 https://wicg.github.io/entries-api/#filesystem
 ----------------------------------------------------
 http://html5ru.com/filesystem-api.html
+---------------
+https://developer.mozilla.org/ru/docs/Web/API/File_and_Directory_Entries_API

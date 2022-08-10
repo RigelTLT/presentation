@@ -1,59 +1,126 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
-		<title>reveal.js</title>
+    <title>reveal.js</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Filesystem API</section>
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>Filesystem API</section>
+        <section>
+          <section>What is Filesystem API</section>
+          <section>
+            This interface will not grant you access to the users filesystem.
+            Instead you will have a "virtual drive" within the browser sandbox!
+          </section>
+        </section>
+        <section>
+          <section>Basic concepts</section>
+          <section>
+            There are two ways to access the FileSystem object:
+            <ul>
+              <li>directly by calling window.requestFileSystem().</li>
+              <li>
+                from a file system entry object through its filesystem property.
+              </li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section>working with the File System API</section>
+          <section><h3>Opening a file system with temporary storage</h3>
+						<pre><code data-trim data-noescape>// Taking care of the browser-specific prefixes.
+window.requestFileSystem = window.requestFileSystem ||<br>window.webkitRequestFileSystem;
+window.directoryEntry = window.directoryEntry ||<br>window.webkitDirectoryEntry;</code></section>
+        </section>
 				<section>
-				<section>What is Filesystem API</section>
-				<section>Basic concepts</section>
+          <section>Directory creation function</section>
+          <section>directory read</section>
+					<section><a href="https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry/createReader">createReader()</a><br>
+						The method returns a FileSystemDirectoryReader object which can be used to read the entries in the directory.</section>
+					<section><h1>Example</h1>
+						<pre><code data-trim data-noescape>function readDirectory(directory) {
+							let dirReader = directory.createReader();
+							let entries = [];
+							let getEntries = () => {
+								dirReader.readEntries((results) => {
+									if (results.length) {
+										entries = entries.concat(toArray(results));
+										getEntries();
+									}
+								}, (error) => {
+									/* handle error — error is a FileError object */
+								});
+							};
+							getEntries();
+							return entries;
+						}
+					</code></pre></section>
+					<section><a href="https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry/getDirectory">getDirectory()</a><br>
+						Возвращает <a href="https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry">FileSystemDirectoryEntry</a> объект, представляющий каталог, расположенный по заданному пути относительно каталога, для которого вызывается метод.</section>
+        </section>
+        <section>
+          <section>file handling</section>
+					<section>
+						<pre><code data-trim data-noescape>
+							function OpenFiles(dir){
+								dir.root.getFile('Test', {}, (fileEntry) => {
+								//fileEntry.isFile === true
+								//fileEntry.isDirectory === false
+								//fileEntry.name === 'Documents'
+								//fileEntry.fullPath === '/Documents/'
+								}, onError);
+							}
+						</code></pre>
+					</section>
+					<section><h3>File Error Examples</h3>
+						<pre><code data-trim data-noescape>FileError.ABORT_ERR: msg = ‘Операция прервана’;
+FileError.NOT_READABLE_ERR: msg = ‘Файл нечитаем’;
+FileError.ENCODING_ERR: msg = ‘Проблемы с кодировкой’;
+FileError.PATH_EXISTS_ERR:Msg = ‘Файл уже существует’;
+					 </code></pre></section>
 				</section>
-				<section>
-				<section>working with the File System API</section>
-				<section>FileError Examples</section>
-			</section>
-			<section>
-			<section>file handling</section>
-				<section>File creation function</section>
-				<section>Write to created file</section>
-				<section>Reading a generated file</section>
-				<section>Deleting the created file</section>
+          <section>
+						<section>Reading a file</section>
+          <section><a href="https://developer.mozilla.org/ru/docs/Web/API/FileReader">FileReader()</a><br>
+						позволяет веб-приложениям асинхронно читать содержимое файлов (или буферы данных), хранящиеся на компьютере пользователя, используя объекты File или Blob, с помощью которых задаётся файл или данные для чтения.</section>
 				</section>
-				<section>
-				<section>Directory creation function</section>
-				<section>directory read</section>
-				</section>
-				<section>safety</section>
-			</div>
-		</div>
+				<section>File creation</section>
+          <section>Reading a generated file</section>
+          <section>Deleting the created file</section>
+        </section>
+        
+        <section>safety</section>
+      </div>
+    </div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
 </html>
