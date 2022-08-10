@@ -19,91 +19,147 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        <section>Filesystem API</section>
+        <section>CSS Grid Layout</section>
         <section>
-          <section>What is Filesystem API</section>
-          <section>
-            This interface will not grant you access to the users filesystem.
-            Instead you will have a "virtual drive" within the browser sandbox!
-          </section>
-        </section>
-        <section>
-          <section>Basic concepts</section>
-          <section>
-            There are two ways to access the FileSystem object:
-            <ul>
-              <li>directly by calling window.requestFileSystem().</li>
-              <li>
-                from a file system entry object through its filesystem property.
-              </li>
-            </ul>
-          </section>
-        </section>
-        <section>
-          <section>working with the File System API</section>
-          <section><h3>Opening a file system with temporary storage</h3>
-						<pre><code data-trim data-noescape>// Taking care of the browser-specific prefixes.
-window.requestFileSystem = window.requestFileSystem ||<br>window.webkitRequestFileSystem;
-window.directoryEntry = window.directoryEntry ||<br>window.webkitDirectoryEntry;</code></section>
-        </section>
-				<section>
-          <section>Directory creation function</section>
-          <section>directory read</section>
-					<section><a href="https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry/createReader">createReader()</a><br>
-						The method returns a FileSystemDirectoryReader object which can be used to read the entries in the directory.</section>
-					<section><h1>Example</h1>
-						<pre><code data-trim data-noescape>function readDirectory(directory) {
-							let dirReader = directory.createReader();
-							let entries = [];
-							let getEntries = () => {
-								dirReader.readEntries((results) => {
-									if (results.length) {
-										entries = entries.concat(toArray(results));
-										getEntries();
-									}
-								}, (error) => {
-									/* handle error — error is a FileError object */
-								});
-							};
-							getEntries();
-							return entries;
-						}
-					</code></pre></section>
-					<section><a href="https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry/getDirectory">getDirectory()</a><br>
-						Возвращает <a href="https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry">FileSystemDirectoryEntry</a> объект, представляющий каталог, расположенный по заданному пути относительно каталога, для которого вызывается метод.</section>
-        </section>
-        <section>
-          <section>file handling</section>
-					<section>
-						<pre><code data-trim data-noescape>
-							function OpenFiles(dir){
-								dir.root.getFile('Test', {}, (fileEntry) => {
-								//fileEntry.isFile === true
-								//fileEntry.isDirectory === false
-								//fileEntry.name === 'Documents'
-								//fileEntry.fullPath === '/Documents/'
-								}, onError);
-							}
-						</code></pre>
-					</section>
-					<section><h3>File Error Examples</h3>
-						<pre><code data-trim data-noescape>FileError.ABORT_ERR: msg = ‘Операция прервана’;
-FileError.NOT_READABLE_ERR: msg = ‘Файл нечитаем’;
-FileError.ENCODING_ERR: msg = ‘Проблемы с кодировкой’;
-FileError.PATH_EXISTS_ERR:Msg = ‘Файл уже существует’;
-					 </code></pre></section>
-				</section>
-          <section>
-						<section>Reading a file</section>
-          <section><a href="https://developer.mozilla.org/ru/docs/Web/API/FileReader">FileReader()</a><br>
-						позволяет веб-приложениям асинхронно читать содержимое файлов (или буферы данных), хранящиеся на компьютере пользователя, используя объекты File или Blob, с помощью которых задаётся файл или данные для чтения.</section>
-				</section>
-				<section>File creation</section>
-          <section>Reading a generated file</section>
-          <section>Deleting the created file</section>
-        </section>
+        <section>Что такое CSS Grid Layout</section>
         
-        <section>safety</section>
+        <section>Грид представляет собой пересекающийся набор горизонтальных и вертикальных линий, образующих колонки и строки.
+          <img src="./assets/grid_gaps.png">
+        </section>
+      </section>
+        <section>
+        <section>Пример использования</section>
+        <section><section>
+          <pre><code data-trim data-noescape>
+            .container {
+              display: grid;
+            }
+          </code></pre>
+          <pre><code data-line-numbers><div class="container">
+  <div>One</div>
+  <div>Two</div>
+  <div>Three</div>
+  <div>Four</div>
+  <div>Five</div>
+</div>
+          </code></pre>
+<img src="./assets/grid.JPG">
+</section>
+</section>
+<section>
+  <h4>Разбиение на колонки</h4>
+  <pre><code data-trim data-noescape>
+    .container {
+      display: grid;
+      grid-template-columns: 200px 200px 200px;
+    }
+  </code></pre>
+  <img src="./assets/grid2.JPG">
+</section>
+<section>
+  <h4>использование фиксированных и гибких размеров</h4>
+  <pre><code data-trim data-noescape>
+    .container {
+      display: grid;
+      grid-template-columns: 200px 1fr 1fr;
+    }
+  </code></pre>
+  <img src="./assets/grid3.JPG">
+</section>
+        </section>
+        <section>
+          repeat()
+          <pre><code data-trim data-noescape>
+            .container {
+              display: grid;
+              <s>grid-template-columns: 1fr 1fr 1fr;</s>
+              grid-template-columns: repeat(3, 1fr);
+            }
+          </code></pre>
+        </section>
+        <section>
+          minmax()
+          <pre><code data-trim data-noescape>
+            .container {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              grid-auto-rows: minmax(100px, auto);
+            }
+          </code></pre>
+          <pre><code data-line-numbers><div class="container">
+  <div>One</div>
+  <div>Two
+    <p>I have some more content in.</p>
+    <p>This makes me taller than 100 pixels.</p>
+  </div>
+  <div>Three</div>
+  <div>Four</div>
+  <div>Five</div>
+</div></code></pre>
+<img src="./assets/grid4.JPG">
+        </section>
+        <section>
+          grid-column(), grid-row()
+          <pre><code data-trim data-noescape>
+            #one {
+              grid-column: 1 / 4;
+              grid-row: 1 / 3;
+            }
+            .two {
+              grid-column: 1;
+              grid-row: 3 / 5;
+            }
+          </code></pre>
+          <pre><code data-line-numbers><div class="container">
+  <div id="one">One</div>
+  <div id="two">Two</div>
+  <div>Three</div>
+  <div>Four</div>
+  <div>Five</div>
+</div></code></pre>
+<img src="./assets/grid5.JPG" style="width: 400px;">
+        </section>
+        <section>
+          grid-column-gap() ,grid-row-gap()
+          <pre><code data-trim data-noescape>
+            .container {
+              grid-column-gap: 10px;
+              grid-row-gap: 1em;
+           }
+          </code></pre>
+<img src="./assets/grid6.JPG">
+        </section>
+        <section>
+        <section>
+          Вкладывание гридов
+          <pre><code data-trim data-noescape>
+            #one {
+              grid-column-start: 1;
+              grid-column-end: 4;
+              grid-row-start: 1;
+              grid-row-end: 3;
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+           }
+          </code></pre>
+          <pre><code data-line-numbers><div class="wrapper">
+            <div id="one">
+                <div>a</div>
+                <div>b</div>
+                <div>c</div>
+             </div>
+             <div>Two</div>
+             <div>Three</div>
+             <div>Four</div>
+             <div>Five</div>
+         </div></code></pre></section>
+         <section>
+<img src="./assets/grid7.JPG">
+</section>
+</section>
+<section>
+  Спасибо за внимание
+</section>
       </div>
     </div>
 
