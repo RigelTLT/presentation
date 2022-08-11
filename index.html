@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-background-gradient="radial-gradient(#7b7d79, #2e2e2e)">CSS Grid Layout</section>
+        <section>
+        <section data-background-gradient="linear-gradient(to bottom, #4e6949, #212120)">What is CSS Grid Layout?</section>
+        
+        <section>A grid is an intersecting set of horizontal and vertical lines that form columns and rows.
+          <img class="r-stretch" src="./assets/grid_gaps.png">
+        </section>
+      </section>
+        <section>
+        <section data-background-gradient="linear-gradient(to bottom, #4e6949, #212120)">Examples of using</section>
+        <section><section>
+          <pre><code data-trim data-noescape>
+            .container {
+              display: grid;
+            }
+          </code></pre>
+          <pre><code data-line-numbers><div class="container">
+  <div>One</div>
+  <div>Two</div>
+  <div>Three</div>
+  <div>Four</div>
+  <div>Five</div>
+</div>
+          </code></pre>
+<img class="r-stretch" src="./assets/grid.JPG">
+</section>
+</section>
+<section>
+  <h4>Splitting into columns</h4>
+  <pre><code data-trim data-noescape>
+    .container {
+      display: grid;
+      grid-template-columns: 200px 200px 200px;
+    }
+  </code></pre>
+  <img src="./assets/grid2.JPG">
+</section>
+<section>
+  <h4>Using fixed and flexible dimensions</h4>
+  <pre><code data-trim data-noescape>
+    .container {
+      display: grid;
+      grid-template-columns: 200px 1fr 1fr;
+    }
+  </code></pre>
+  <img src="./assets/grid3.JPG">
+</section>
+        </section>
+        <section data-background-gradient="linear-gradient(to bottom, #4e6949, #212120)">
+          repeat()
+          <pre><code data-trim data-noescape>
+            .container {
+              display: grid;
+              <s>grid-template-columns: 1fr 1fr 1fr;</s>
+              grid-template-columns: repeat(3, 1fr);
+            }
+          </code></pre>
+        </section>
+        <section data-background-gradient="linear-gradient(to bottom, #4e6949, #212120)">
+          minmax()
+          <pre><code data-trim data-noescape>
+            .container {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              grid-auto-rows: minmax(100px, auto);
+            }
+          </code></pre>
+          <pre><code data-line-numbers><div class="container">
+  <div>One</div>
+  <div>Two
+    <p>I have some more content in.</p>
+    <p>This makes me taller than 100 pixels.</p>
+  </div>
+  <div>Three</div>
+  <div>Four</div>
+  <div>Five</div>
+</div></code></pre>
+<img src="./assets/grid4.JPG">
+        </section>
+        <section data-background-gradient="linear-gradient(to bottom, #4e6949, #212120)">
+          grid-column(), grid-row()
+          <pre><code data-trim data-noescape>
+            #one {
+              grid-column: 1 / 4;
+              grid-row: 1 / 3;
+            }
+            .two {
+              grid-column: 1;
+              grid-row: 3 / 5;
+            }
+          </code></pre>
+          <pre><code data-line-numbers><div class="container">
+  <div id="one">One</div>
+  <div id="two">Two</div>
+  <div>Three</div>
+  <div>Four</div>
+  <div>Five</div>
+</div></code></pre>
+<img src="./assets/grid5.JPG" style="width: 400px;">
+        </section>
+        <section data-background-gradient="linear-gradient(to bottom, #4e6949, #212120)">
+          grid-column-gap() ,grid-row-gap()
+          <pre><code data-trim data-noescape>
+            .container {
+              grid-column-gap: 10px;
+              grid-row-gap: 1em;
+           }
+          </code></pre>
+<img src="./assets/grid6.JPG">
+        </section>
+        <section>
+        <section data-background-gradient="linear-gradient(to bottom, #4e6949, #212120)">
+          Nesting Grids
+          <pre><code data-trim data-noescape>
+            #one {
+              grid-column-start: 1;
+              grid-column-end: 4;
+              grid-row-start: 1;
+              grid-row-end: 3;
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+           }
+          </code></pre>
+          <pre><code data-line-numbers><div class="wrapper">
+            <div id="one">
+                <div>a</div>
+                <div>b</div>
+                <div>c</div>
+             </div>
+             <div>Two</div>
+             <div>Three</div>
+             <div>Four</div>
+             <div>Five</div>
+         </div></code></pre></section>
+         <section>
+<img src="./assets/grid7.JPG">
+</section>
+</section>
+<section data-background-gradient="radial-gradient(#7b7d79, #2e2e2e)">
+  Thank you for your attention
+</section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>
